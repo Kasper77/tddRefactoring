@@ -15,19 +15,19 @@ public class Universe {
 			aliveNeighboursCount++;
 		if ((i > 0) && universe[i - 1][j])
 			aliveNeighboursCount++;
-		if ((i > 0 && j < universe[0].length) && universe[i - 1][j + 1])
+		if ((i > 0 && j < (universe[0].length - 1)) && universe[i - 1][j + 1])
 			aliveNeighboursCount++;
 
 		if ((j > 0) && universe[i][j - 1])
 			aliveNeighboursCount++;
-		if (j < universe[0].length && (universe[i][j + 1]))
+		if (j < (universe[0].length - 1) && (universe[i][j + 1]))
 			aliveNeighboursCount++;
 
-		if (i < universe.length && j > 0 && universe[i + 1][j - 1])
+		if (i < (universe.length - 1) && j > 0 && universe[i + 1][j - 1])
 			aliveNeighboursCount++;
-		if (i < universe.length && universe[i + 1][j])
+		if (i < (universe.length - 1) && universe[i + 1][j])
 			aliveNeighboursCount++;
-		if (i < universe.length && j < universe[0].length && universe[i + 1][j + 1])
+		if (i < (universe.length - 1) && j < (universe[0].length - 1) && universe[i + 1][j + 1])
 			aliveNeighboursCount++;
 
 		return aliveNeighboursCount;
