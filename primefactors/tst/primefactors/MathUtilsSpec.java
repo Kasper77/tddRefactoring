@@ -29,14 +29,24 @@ public class MathUtilsSpec {
 				{ SetUtils.emptySet(), 0 },
 				{ SetUtils.emptySet(), 1 },
 				{ SetUtils.asSet(2), 2 },
-				{ SetUtils.asSet(3), 3 }
-//				TODO
-//				{ SetUtils.asSet(2,2), 4 }
+				{ SetUtils.asSet(3), 3 },
+				{ SetUtils.asSet(2,2), 4 },
+				{ SetUtils.asSet(5), 5 },
+				{ SetUtils.asSet(2,3), 6 },
+				{ SetUtils.asSet(7), 7 },
+				{ SetUtils.asSet(2,2,2), 8 },
+				{ SetUtils.asSet(3,3), 9 },
+				{ SetUtils.asSet(2,5), 10 },
+				{ SetUtils.asSet(11), 11 },
+				{ SetUtils.asSet(2,2,3), 12 },
+				{ SetUtils.asSet(5,5), 25 },
+				
 		});
 	}
 
 	@Test
 	public void getPrimeFactors() {
-//		assertEquals(expectedPrimeFactors, MathUtils.getPrimeFactors(numberToFactorize));
+		assertEquals(expectedPrimeFactors, MathUtils.getPrimeFactors(numberToFactorize));
+		System.out.println(MathUtils.getPrimeFactors(1000124045));
 	}
 }

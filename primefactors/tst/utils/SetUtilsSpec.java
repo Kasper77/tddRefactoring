@@ -18,8 +18,9 @@ public class SetUtilsSpec {
 		HashSet set = SetUtils.emptySet();
 		int arbitraryElement = 1;
 		set.add(arbitraryElement);
-//		assertEquals(set, SetUtils.asSet(arbitraryElement));
+		assertEquals(set, SetUtils.asSet(arbitraryElement));
 	}
+
 	@Test
 	public void asSet_whenTwoElements() {
 		HashSet set = SetUtils.emptySet();
@@ -27,7 +28,12 @@ public class SetUtilsSpec {
 		int arbitraryElement2 = 2;
 		set.add(arbitraryElement);
 		set.add(arbitraryElement2);
-		
-		assertEquals(set, SetUtils.asSet(arbitraryElement,arbitraryElement2));
+
+		assertEquals(set, SetUtils.asSet(arbitraryElement, arbitraryElement2));
+	}
+
+	@Test
+	public void union_whenTypical() {
+		assertEquals(SetUtils.asSet(1, 2, 3, 4), SetUtils.union(SetUtils.asSet(1, 2), SetUtils.asSet(3, 4)));
 	}
 }
