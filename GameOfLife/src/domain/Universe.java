@@ -1,140 +1,53 @@
 package domain;
 
 public class Universe {
+	private int WIDTH;
+	private int LENGTH;
 
-	private static final int WIDTH = 5;
-	private static final int LENGTH = 5;
+	private boolean[][] universe = null;
 
-	boolean[][] universe = new boolean[LENGTH][WIDTH];
-	boolean[][] futureUniverse = new boolean[LENGTH][WIDTH];
-
-	private int aliveNeighbours(int i, int j) {
-		int aliveNeighboursCount = 0;
-
-		if ((i > 0 && j > 0) && universe[i - 1][j - 1])
-			aliveNeighboursCount++;
-		if ((i > 0) && universe[i - 1][j])
-			aliveNeighboursCount++;
-		if ((i > 0 && j < (universe[0].length - 1)) && universe[i - 1][j + 1])
-			aliveNeighboursCount++;
-
-		if ((j > 0) && universe[i][j - 1])
-			aliveNeighboursCount++;
-		if (j < (universe[0].length - 1) && (universe[i][j + 1]))
-			aliveNeighboursCount++;
-
-		if (i < (universe.length - 1) && j > 0 && universe[i + 1][j - 1])
-			aliveNeighboursCount++;
-		if (i < (universe.length - 1) && universe[i + 1][j])
-			aliveNeighboursCount++;
-		if (i < (universe.length - 1) && j < (universe[0].length - 1) && universe[i + 1][j + 1])
-			aliveNeighboursCount++;
-
-		return aliveNeighboursCount;
+	public Universe(int width, int length) {
+		this.WIDTH = width;
+		this.LENGTH = length;
+		universe = new boolean[this.WIDTH][this.LENGTH];
 	}
 
-	private void createFutureUniverse() {
-		for (int i = 0; i < universe.length; i++)
-			futureUniverse[i] = universe[i].clone();
+	public boolean isUniverseValid() {
+		if ((WIDTH > 0) && (LENGTH > 0))
+			return true;
+		return false;
 	}
 
-	public void die() {
-		universe = new boolean[5][5];
+	public int getWIDTH() {
+		return WIDTH;
 	}
 
-	public void evolve() {
-		createFutureUniverse();
-
-		for (int i = 0; i < LENGTH; i++) {
-			for (int j = 0; j < WIDTH; j++) {
-				if (isCellAlive(i, j) && isUnderPopulated(i, j))
-					setCellDead(futureUniverse, i, j);
-				if (isCellAlive(i, j) && isOverPopulated(i, j))
-					setCellDead(futureUniverse, i, j);
-				if (isCellDead(i, j) && isZombiePopulated(i, j))
-					setCellAlive(futureUniverse, i, j);
-			}
-		}
-
-		universe = futureUniverse;
+	public int getLENGTH() {
+		return LENGTH;
 	}
 
-	public boolean isCellAlive(int i, int j) {
-		return !isCellDead(i, j);
+	public boolean[][] getCells() {
+		return universe;
 	}
 
-	public boolean isCellDead(int i, int j) {
-		return !universe[i][j];
+	public void setCell(int x, int y, boolean val) {
+		universe[x][y] = val;
 	}
 
-	private boolean isUnderPopulated(int i, int j) {
-		return aliveNeighbours(i, j) < 2;
+	public boolean getCell(int x, int y) {
+		return universe[x][y];
 	}
 
-	private boolean isOverPopulated(int i, int j) {
-		return aliveNeighbours(i, j) > 3;
-	}
-	
-	private boolean isZombiePopulated(int i, int j) {
-		return aliveNeighbours(i, j) == 3;
+	public boolean[] getRowOfCells(int x) {
+		return universe[x];
 	}
 
-	private void populateNeighbourhood(int i, int j, int numberOfNeighbours) {
-		int aliveNeighboursCount = 0;
-		if (i > 0) {
-			universe[i - 1][j] = true;
-			aliveNeighboursCount++;
-		}
-		if (j < universe[0].length) {
-			universe[i][j + 1] = true;
-			aliveNeighboursCount++;
-		}
-
-		if (aliveNeighboursCount == numberOfNeighbours)
-			return;
-
-		if (i < LENGTH) {
-			universe[i + 1][j] = true;
-			aliveNeighboursCount++;
-		}
-
-		if (aliveNeighboursCount == numberOfNeighbours)
-			return;
-
-		if (j > 0) {
-			universe[i][j - 1] = true;
-			aliveNeighboursCount++;
-		}
-
-		if (aliveNeighboursCount == numberOfNeighbours)
-			return;
+	public void setRowOfCells(int rowIndex, boolean[] row) {
+		universe[rowIndex] = row;
 	}
 
-	private void setCellAlive(boolean[][] matrix, int i, int j) {
-		matrix[i][j] = true;
+	public int getSize() {
+		return universe.length;
 	}
 
-	public void setCellAlive(int i, int j) {
-		setCellAlive(universe, i, j);
-	}
-
-	private void setCellDead(boolean[][] matrix, int i, int j) {
-		matrix[i][j] = false;
-	}
-
-	public void setCellDead(int i, int j) {
-		setCellDead(universe, i, j);
-	}
-
-	public void overPopulateNeighbourhood(int i, int j) {
-		populateNeighbourhood(i, j, 4);
-	}
-
-	public void populateNeighbourhood(int i, int j) {
-		populateNeighbourhood(i, j, 2);
-	}
-
-	public void zombifyNeighbourhood(int i, int j) {
-		populateNeighbourhood(i, j, 3);
-	}
 }
