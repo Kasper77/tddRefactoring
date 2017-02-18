@@ -1,23 +1,23 @@
 package presenter;
 
-import domain.UniverseModel;
-import ui.ConsoleGUI;
+import java.util.Observable;
+import java.util.Observer;
 
-public class ConsolePresenter {
+import domain.Universe;
+import ui.ConsoleView;
 
-	private UniverseModel model = null;
-	private ConsoleGUI gui;
+public class ConsolePresenter implements Observer {
 
-	public ConsolePresenter(UniverseModel model, ConsoleGUI gui) {
+	private Universe model = null;
+	private ConsoleView gui;
+
+	public ConsolePresenter(Universe model, ConsoleView gui) {
 		this.model = model;
 		this.gui = gui;
 	}
 
-	public void evolve(){
-		if ((model == null) || (gui == null)) {
-			throw new IllegalArgumentException(""); // unchecked exception
-		}
-		model.evolve();
+	@Override
+	public void update(Observable o, Object arg) {
 		gui.updateDisplay(model.getUniverse());
 	}
 }

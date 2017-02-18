@@ -1,15 +1,15 @@
 package ui;
 
-import domain.Universe;
+import domain.Earth;
 
-public class ConsoleGUI {
+public class ConsoleView {
 
-	public void updateDisplay(Universe universe) {
+	public void updateDisplay(Earth e) {
 		System.out.print("------------------------------");
 		System.out.println();
-		for (int i = 0; i < universe.getWIDTH(); i++) {
-			for (int j = 0; j < universe.getLENGTH(); j++) {
-				if (universe.getCell(i, j) == true) {
+		for (int i = 0; i < e.getWIDTH(); i++) {
+			for (int j = 0; j < e.getLENGTH(); j++) {
+				if (e.getCell(i, j) == true) {
 					System.out.print("X");
 				}
 				else {
@@ -20,5 +20,4 @@ public class ConsoleGUI {
 		}
 		System.out.print("------------------------------");
 	}
-
 }

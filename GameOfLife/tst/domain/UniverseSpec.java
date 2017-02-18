@@ -9,26 +9,48 @@ public class UniverseSpec {
 	private final static int LENGTH = 5;
 
 	@Test
-	public void isSurfaceValid_whenTipicalUniverse() {
+	public void evolve_whenAliveAndUnderPopulated() {
 		Universe unit = new Universe(WIDTH, LENGTH);
+		unit.die();
+		unit.setCellAlive(2, 2);
 
-		assertTrue("Universe Surface is valid!", unit.isUniverseValid());
+		unit.evolve();
+
+		assertTrue(unit.isCellDead(2, 2));
 	}
 
 	@Test
-	public void isSurfaceValid_whenNullUniverse() {
-		Universe unit = new Universe(0, 0);
-		
-		assertTrue("Universe Surface is valid!", !unit.isUniverseValid());
+	public void evolve_whenAliveAndNormalPopulated() {
+		Universe unit = new Universe(WIDTH, LENGTH);
+		unit.die();
+		unit.setCellAlive(2, 2);
+		unit.populateNeighbourhood(2, 2);
+
+		unit.evolve();
+
+		assertTrue(unit.isCellAlive(2, 2));
 	}
 
 	@Test
-	public void getCells_whenTipicalUniverse() {
+	public void evolve_whenAliveAndOverPopulated() {
 		Universe unit = new Universe(WIDTH, LENGTH);
+		unit.die();
+		unit.setCellAlive(2, 2);
+		unit.overPopulateNeighbourhood(2, 2);
 
-		assertTrue(unit.getCells() != null);
-		assertTrue(unit.getWIDTH() == WIDTH);
-		assertTrue(unit.getLENGTH() == LENGTH);
+		unit.evolve();
+
+		assertTrue(unit.isCellDead(2, 2));
 	}
-	
+
+	@Test
+	public void evolve_whenDeadAndZombiePopulation() {
+		Universe unit = new Universe(WIDTH, LENGTH);
+		unit.die();
+		unit.zombifyNeighbourhood(2, 2);
+
+		unit.evolve();
+
+		assertTrue(unit.isCellAlive(2, 2));
+	}
 }
